@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin:*
+Connection:Keep-Alive
+Content-Encoding:gzip
+Content-Type:text/html; charset=utf-8
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Check out this image</h1>
+        <!-- <img src="images/1.jpg" /> -->
+    </body>
+</html>
