@@ -43,7 +43,7 @@ To run this, you need a UNIX based system.
 
 *Example*:
 
-`./server.sh -document_root "/usr/data" -port 80`
+`./server.sh -document_root "/usr/data/webpage" -port 80`
 
 ## Important Notes:
 * Only the following links are available in the server - directory "webpage". Other links redirect to *sjsu.edu*:

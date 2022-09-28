@@ -40,7 +40,7 @@ Step 2: Use the following command:
 ./server.sh -document_root "<path to your server files>" -port <server port number>
 
 Example:
-./server.sh -document_root "/usr/data" -port 80
+./server.sh -document_root "/usr/data/webpage" -port 80
 
 ## Important Notes:
 * Only the following links are available in the server - directory "webpage". Other links redirect to *sjsu.edu*:
