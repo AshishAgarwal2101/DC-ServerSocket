@@ -1,5 +1,7 @@
 package model;
 
+import java.io.IOException;
+import java.net.ProtocolException;
 import java.util.*;
 
 public class HttpRequest {
@@ -12,7 +14,10 @@ public class HttpRequest {
     public static final String POST_REQUEST = "POST";
     public static final String PUT_REQUEST = "PUT";
 
-    public static void buildRequest(HttpRequest httpRequest, String requestStr){
+    public static void buildRequest(HttpRequest httpRequest, String requestStr) throws ProtocolException {
+        if(!requestStr.contains("HTTP")){
+            throw new ProtocolException("Not an HTTP Request");
+        }
         requestStr.replace("\r", "");
         String[] lines = requestStr.split("\n");
         //System.out.println("Request String::::::: "+requestStr);
@@ -22,6 +27,7 @@ public class HttpRequest {
 
     private void buildMetadata(String[] requestLines){
         String[] strParts = requestLines[0].split(" ");
+        System.out.println("Received Request: "+requestLines[0]);
         this.httpMethod = strParts[0];
         this.uri = strParts[1];
         this.httpVersion = strParts[2];

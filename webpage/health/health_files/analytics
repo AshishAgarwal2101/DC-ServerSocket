@@ -1,0 +1,30 @@
+
+function piResponse() {
+		piSetCookie('visitor_id300271', '258027751', 3650);
+			piSetCookie('visitor_id300271-hash', '172f3c2146a771fd6a4c8503f71fe15a90bb726620b7dc0d58989f443c715f89342c0039483b38fe43dd02e891bbbb3a8620f2c6', 3650);
+		
+		if (document.location.protocol != "https:" || (document.location.protocol == "https:" && true)) {
+		var analytics_link = document.location.protocol + "//" + "study.sjsu.edu/analytics?";
+		pi.tracker.visitor_id='258027751';
+
+				pi.tracker.visitor_id_sign='172f3c2146a771fd6a4c8503f71fe15a90bb726620b7dc0d58989f443c715f89342c0039483b38fe43dd02e891bbbb3a8620f2c6';
+		
+				pi.tracker.campaign_id='16617';
+		
+		var variables = 'conly=true';
+		for (property in pi.tracker) {
+					variables += "&" + property + "=" + encodeURIComponent(pi.tracker[property]);
+				}
+		var headID = document.getElementsByTagName("head")[0];
+		piScriptObj[piScriptNum] = document.createElement('script');
+		piScriptObj[piScriptNum].type = 'text/javascript';
+		piScriptObj[piScriptNum].src = analytics_link + variables;
+		headID.appendChild(piScriptObj[piScriptNum]);
+		piScriptObj[piScriptNum].onload = function() { return; }
+	}
+	}
+piResponse();
+
+
+
+

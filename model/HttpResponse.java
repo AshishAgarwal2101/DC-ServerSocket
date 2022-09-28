@@ -9,24 +9,25 @@ public class HttpResponse {
     private Map<String, String> headers = new HashMap<>();
     private String body = "";
 
-    public HttpResponse(){
-        headers.put("Content-Type", "text/html");
-        headers.put("Connection", "Keep-Alive");
-        headers.put("Access-Control-Allow-Origin", "*");
-        headers.put("Content-Encoding", "gzip");
+    public HttpResponse(){}
+
+    public HttpResponse(String requestedFilePath){
+        assignContentType(requestedFilePath);
     }
 
-    public HttpResponse(String body, String requestedFilePath){
-        this();
-        setBody(body);
-        assignContentType(requestedFilePath);
+    public HttpResponse(String requestedFilePath, String body){
+        this(requestedFilePath);
+        this.body = body;
     }
 
     private void assignContentType(String requestedFilePath) {
         if(requestedFilePath.endsWith(".html")) {
             headers.put("Content-Type", "text/html");
         }
-        else if(requestedFilePath.endsWith(".jpg")) {
+        else if(requestedFilePath.endsWith(".jpg") || requestedFilePath.endsWith(".jpeg")) {
+            headers.put("Content-Type", "image/jpg");
+        }
+        else if(requestedFilePath.endsWith(".jpeg")) {
             headers.put("Content-Type", "image/jpeg");
         }
         else if(requestedFilePath.endsWith(".png")) {
@@ -35,7 +36,10 @@ public class HttpResponse {
         else if(requestedFilePath.endsWith(".gif")) {
             headers.put("Content-Type", "image/gif");
         }
-        else if(requestedFilePath.endsWith(".css")) {
+        else if(requestedFilePath.endsWith(".svg")) {
+            headers.put("Content-Type", "image/svg+xml");
+        }
+        else if(requestedFilePath.endsWith(".css") || requestedFilePath.endsWith("css")) {
             headers.put("Content-Type", "text/css");
         }
         else if(requestedFilePath.endsWith(".js") || requestedFilePath.endsWith(".jsx")) {
@@ -52,7 +56,6 @@ public class HttpResponse {
 
     public void setBody(String body){
         this.body = body;
-        headers.put("Content-Length", String.valueOf(body.getBytes().length));
     }
 
     public void setHttpVersion(String httpVersion){
