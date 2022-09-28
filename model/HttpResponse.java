@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 public class HttpResponse {
-    private String httpVersion = "HTTP/1.1";
+    private String httpVersion = "HTTP/1.0";
     private int httpStatusCode = 200;
     private String httpStatus = "OK";
     private Map<String, String> headers = new HashMap<>();
@@ -23,6 +23,9 @@ public class HttpResponse {
     private void assignContentType(String requestedFilePath) {
         if(requestedFilePath.endsWith(".html")) {
             headers.put("Content-Type", "text/html");
+        }
+        else if(requestedFilePath.endsWith(".txt")) {
+            headers.put("Content-Type", "text/plain");
         }
         else if(requestedFilePath.endsWith(".jpg") || requestedFilePath.endsWith(".jpeg")) {
             headers.put("Content-Type", "image/jpg");
@@ -77,14 +80,20 @@ public class HttpResponse {
     }
 
     public String buildMetadata(StringBuilder responseBuilder){
-        responseBuilder.append(httpVersion).append(" ").append(httpStatusCode).append(" ").append(httpStatus).append("\r\n");
+        headers.put("Date", (new Date()).toInstant().toString());
+        responseBuilder.append(httpVersion).append(" ").append(httpStatusCode).append(" ").append(httpStatus);
         for(String headerKey:headers.keySet()){
             String headerValue = headers.get(headerKey);
-            responseBuilder.append(headerKey).append(":").append(headerValue).append("\r\n");
+            responseBuilder.append("\r\n").append(headerKey).append(":").append(headerValue);
         }
-
-        responseBuilder.append("\r\n");
+        
+        responseBuilder.append("\r\n\r\n");
         return responseBuilder.toString();
+    }
+
+    public String buildMetadata(StringBuilder responseBuilder, long fileContentLength){
+        headers.put("Content-Length", fileContentLength + "");
+        return buildMetadata(responseBuilder);
     }
 
     public String buildBody(StringBuilder responseBuilder){

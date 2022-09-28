@@ -20,7 +20,6 @@ public class HttpRequest {
         }
         requestStr.replace("\r", "");
         String[] lines = requestStr.split("\n");
-        //System.out.println("Request String::::::: "+requestStr);
         httpRequest.buildMetadata(lines);
         httpRequest.buildHeaders(lines);
     }

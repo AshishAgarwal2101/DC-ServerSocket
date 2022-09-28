@@ -21,6 +21,9 @@ public class ServerHandler implements Runnable {
             writeToStream();
             socket.close();
         }
+        catch(ProtocolException ex) {
+            writeToStream(400, "Bad Request");
+        }
         catch(IOException ex)
         {
             System.out.println("IOException: "+ ex.getMessage());
@@ -49,34 +52,62 @@ public class ServerHandler implements Runnable {
         }
     }
 
-    private void writeToStream() throws IOException {
-        PrintStream out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()));
+    private void writeToStream() {
+        PrintStream out = null;
         try {
+            out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()));
             HttpResponse response = new HttpResponse(requestedFilePath);
-            out.print(response.buildMetadata(new StringBuilder()));
-            writeFileContents(out);
+            File file = getFile();
+            out.print(response.buildMetadata(new StringBuilder(), file.length()));
+            writeFileContents(out, file);
             out.close();
         } catch(FileNotFoundException ex) {
             HttpResponse response = new HttpResponse(requestedFilePath, "File not found.");
             response.setHttpStatus(404, "Not Found");
             out.print(response.buildResponse());
+            out.close();
         } catch(SecurityException ex) {
             HttpResponse response = new HttpResponse(requestedFilePath, "Permission Denied.");
             response.setHttpStatus(403, "Forbidden");
             out.print(response.buildResponse());
+            out.close();
         }  catch(Exception ex) {
             HttpResponse response = new HttpResponse(requestedFilePath, ex.getMessage());
             response.setHttpStatus(500, "Internal Server Error");
             out.print(response.buildResponse());
+            out.close();
         }
     }
 
-    private void writeFileContents(PrintStream out) throws IOException, FileNotFoundException {
+    private void writeToStream(int statusCode, String status) {
+        PrintStream out = null;
+        try{
+            out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()));
+            HttpResponse response = new HttpResponse(requestedFilePath, "File not found.");
+            response.setHttpStatus(404, "Not Found");
+            out.print(response.buildResponse());
+            out.close();
+        } catch(Exception ex) {
+            HttpResponse response = new HttpResponse(requestedFilePath, ex.getMessage());
+            response.setHttpStatus(500, "Internal Server Error");
+            out.print(response.buildResponse());
+            out.close();
+        }
+    }
+
+    private File getFile() throws FileNotFoundException, SecurityException{
         File file = new File(rootDir + requestedFilePath);
+        if(!file.exists()) {
+            throw new FileNotFoundException();
+        }
         if(!file.canRead()){
             throw new SecurityException();
         }
 
+        return file;
+    }
+
+    private void writeFileContents(PrintStream out, File file) throws IOException, FileNotFoundException {
         FileInputStream fileStream = new FileInputStream(file);
         byte[] buffer = new byte[4*1024];
         int count;

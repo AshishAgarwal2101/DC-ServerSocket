@@ -1,9 +1,50 @@
-# DC-ServerSocket
-## This project is used to demonstrate usage of server sockets using java.
+## Name:
+Ashish Agarwal
+
+## Assignment Name:
+Programming Assignment 1
+
+## Description:
+* This project is used to demonstrate usage of server sockets using java to implement a functional HTTTP based web server.
+* A Web server listens for connections bound to a specific port.
+* Clients request for files and server responds with the file contents if it exists and proper permissions are set.
+
+## List of submitted files:
+The project has the following file structure:
+* 'model' directory:
+    * **HttpRequest.java**: This class is used to parse incoming HTTP request and extract protocol, version, headers, and other metadata, along with the requested file.
+    * **HttpResponse.java**: This class is used to store the response parameters like HTTP version, headers, body and other such information. It is also used to build the final response that could be returned to the client.
+* 'handler' directory:
+    * **ServerHandler.java**: This is the class that is used to execute the newly spawned thread when an incoming request comes in. It parses the request, fetches the necessary files and returns the response to the client.
+* **Server.java**: This is the entry point. It has the main class and is used to run the server.
+* **server.sh**: Shell script that takes in document_root and port number and runs the java based web server.
+* **webpage**: This directory is the root directory for the server files. It contains the index.html file.
+
+## Explanation of the program:
+* The Server class waits for requests from clients.
+* Whenever a new request comes in, it spaws a new thread and let ServerHandler handle the request.
+* The ServerHandler does the following operations:
+    * *Read Request*: It parses the request to find the requested protocol, version, metadata and the requested resource. If HTTP protocol is not used, a **400** status code response is returned.
+    * *Write Response*: It tries to fetch the requested resource. If the resource is not found, a **404** status code response is returned. If the resource doesn't have the necessary read permission set, a **403** status code response is returned. Finally, if the resource is found, the resource with a status code **200** is returned.
+    * At any point, if there is any server error, it returns a **500** status code to the client.
+
+## Instruction for running the program
 To run this, you need a UNIX based system.
 
-Use the following command:
-`./server -document_root "<path to your server files>" -port <server port number>`
+**Step 1**: Open Terminal and point to the code directory.
 
-Example:
+**Step 2**: Use the following command:
+
+`./server.sh -document_root "<path to your server files>" -port <server port number>`
+
+*Example*:
+
 `./server.sh -document_root "/usr/data" -port 80`
+
+## Important Notes:
+* Only the following links are available in the server - directory "webpage". Other links redirect to *sjsu.edu*:
+    * "VISIT" link in the menubar.
+    * "APPLY" link in the menubar.
+    * "GIVE" link in the menubar.
+    * "Explore Themed Events" link.
+    * "View All Facts and Accomplishments" link.
