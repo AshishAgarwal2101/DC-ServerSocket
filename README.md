@@ -5,7 +5,7 @@ Ashish Agarwal
 Programming Assignment 1
 
 ## Description:
-* This project is used to demonstrate usage of server sockets using java to implement a functional HTTTP based web server.
+* This project is used to demonstrate usage of server sockets using java to implement a functional HTTP based web server.
 * A Web server listens for connections bound to a specific port.
 * Clients request for files and server responds with the file contents if it exists and proper permissions are set.
 
