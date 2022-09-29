@@ -32,7 +32,7 @@ The project has the following file structure:
     * *Write Response*: It tries to fetch the requested resource. If the resource is not found, a **404** status code response is returned. If the resource doesn't have the necessary read permission set, a **403** status code response is returned. Finally, if the resource is found, the resource with a status code **200** is returned.
     * At any point, if there is any server error, it returns a **500** status code to the client.
 
-## Instruction for running the program
+## Instructions for running the program:
 To run this, you need a UNIX based system.
 
 **Step 1**: Open Terminal and point to the code directory.
