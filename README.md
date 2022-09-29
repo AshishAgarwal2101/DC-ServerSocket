@@ -45,6 +45,9 @@ To run this, you need a UNIX based system.
 
 `./server.sh -document_root "/usr/data/webpage" -port 80`
 
+*Explanation*:
+The above command will compile the java files and execute the class file with the parameters passed by the user.
+
 ## Important Notes:
 * Only the following links are available in the server - directory "webpage". Other links redirect to *sjsu.edu*:
     * "VISIT" link in the menubar.
