@@ -83,8 +83,8 @@ public class ServerHandler implements Runnable {
         PrintStream out = null;
         try{
             out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()));
-            HttpResponse response = new HttpResponse(requestedFilePath, "File not found.");
-            response.setHttpStatus(404, "Not Found");
+            HttpResponse response = new HttpResponse(requestedFilePath, "");
+            response.setHttpStatus(statusCode, status);
             out.print(response.buildResponse());
             out.close();
         } catch(Exception ex) {

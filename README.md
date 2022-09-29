@@ -28,7 +28,7 @@ The project has the following file structure:
 * The Server class waits for requests from clients.
 * Whenever a new request comes in, it spaws a new thread and let ServerHandler handle the request.
 * The ServerHandler does the following operations:
-    * *Read Request*: It parses the request to find the requested protocol, version, metadata and the requested resource. If HTTP protocol is not used, a **400** status code response is returned.
+    * *Read Request*: It parses the request to find the requested protocol, version, metadata and the requested resource. If HTTP protocol is not used or if a request method other than the GET request is used, a **400** status code response is returned.
     * *Write Response*: It tries to fetch the requested resource. If the resource is not found, a **404** status code response is returned. If the resource doesn't have the necessary read permission set, a **403** status code response is returned. Finally, if the resource is found, the resource with a status code **200** is returned.
     * At any point, if there is any server error, it returns a **500** status code to the client.
 

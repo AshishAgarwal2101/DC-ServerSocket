@@ -24,12 +24,15 @@ public class HttpRequest {
         httpRequest.buildHeaders(lines);
     }
 
-    private void buildMetadata(String[] requestLines){
+    private void buildMetadata(String[] requestLines) throws ProtocolException {
         String[] strParts = requestLines[0].split(" ");
         System.out.println("Received Request: "+requestLines[0]);
         this.httpMethod = strParts[0];
         this.uri = strParts[1];
         this.httpVersion = strParts[2];
+        if(!httpMethod.equals("GET")){
+            throw new ProtocolException("Invalid HTTP method");
+        }
     }
 
     private void buildHeaders(String[] requestLines){
